@@ -1,3 +1,6 @@
+rootProject.name = "Reepay Checkout Kotlin Demo App"
+include(":ReepayCheckoutSheetDemo")
+
 pluginManagement {
     repositories {
         google()
@@ -20,8 +23,6 @@ dependencyResolutionManagement {
         }
     }
 }
-
-rootProject.name = "Reepay Checkout Kotlin Demo APP"
 
 // Option 2. Load project locally
 // https://discuss.gradle.org/t/add-local-project-dependency/27021
