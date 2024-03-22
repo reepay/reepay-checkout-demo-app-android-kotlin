@@ -2,6 +2,8 @@
  
 This demo app demonstrates how to build a checkout flow using CheckoutSheet, an embeddable component that currently supports card payments with a single integration
 
+See official [documentation](https://optimize-docs.billwerk.com/docs/checkout-sdk-for-android)
+
 ## Getting Started
 
 ### Option 1: Load CheckoutSheet dependency through Jitpack
@@ -15,8 +17,6 @@ Uncomment the dependency in `build.gradle.kts`:
 ```
 implementation("com.github.reepay:reepay-checkout-demo-app-android-kotlin:TAG")
 ```
-
-Run the project
 
 ### Option 2: Load CheckoutSheet manually
 
