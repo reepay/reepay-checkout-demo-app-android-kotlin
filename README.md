@@ -1,3 +1,7 @@
+⚠️ This SDK is under development and not yet officially supported.
+
+---
+
 # billwerk-checkout-sdk-test
  
 This demo app demonstrates how to build a checkout flow using CheckoutSheet, an embeddable component that currently supports card payments with a single integration
