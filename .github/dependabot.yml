@@ -1,0 +1,13 @@
+version: 2
+updates:
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "saturday"
+      time: "02:00"
+      timezone: "Europe/Copenhagen"
+    groups:
+      android-dependencies:
+        patterns:
+          - "com.android.*"
