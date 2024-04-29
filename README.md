@@ -3,21 +3,21 @@
 ---
 
 # billwerk-checkout-sdk-test
- 
+
 This demo app demonstrates how to build a checkout flow using CheckoutSheet, an embeddable component that currently supports card payments with a single integration
 
 ## Getting Started
 
 ### Option 1: Load CheckoutSheet dependency through Jitpack
 
-Request a personal access token (`JITPACK_SECRET`) to Billwerk's Jitpack and store it as an environment variable
+(This is the default configuration)
 
-Make sure the `dependencyResolutionManagement` code block is uncommented in `settings.gradle.kts` 
+Make sure the `dependencyResolutionManagement` code block is uncommented in `settings.gradle.kts`
 
-Uncomment the dependency in `build.gradle.kts`:
+Uncomment the Checkout SDK dependency in `build.gradle.kts`, and replace `TAG` with the desired version number (e.g. `1.0.2`)
 
 ```
-implementation("com.github.reepay:reepay-checkout-demo-app-android-kotlin:TAG")
+implementation("com.github.reepay:reepay-android-checkout-sheet:TAG")
 ```
 
 Run the project

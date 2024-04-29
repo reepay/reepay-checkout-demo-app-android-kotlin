@@ -17,9 +17,6 @@ dependencyResolutionManagement {
         mavenCentral()
         maven {
             url = uri("https://jitpack.io")
-            credentials {
-                username = System.getenv("JITPACK_SECRET")
-            }
         }
     }
 }

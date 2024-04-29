@@ -40,7 +40,8 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
 
     // Option 1. implement external dependency
-    //implementation("com.github.reepay:reepay-checkout-demo-app-android-kotlin:TAG")
+    implementation("com.github.reepay:reepay-android-checkout-sheet:1.0.2")
+
 
     // Option 2. Implement local depenency
     //implementation(project(":checkout"))
