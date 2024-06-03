@@ -37,7 +37,7 @@ android {
 
 dependencies {
     implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.appcompat:appcompat:1.7.0")
 
     // Option 1. implement external dependency
     implementation("com.github.reepay:reepay-android-checkout-sheet:1.0.3")
