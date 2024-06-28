@@ -30,7 +30,8 @@ class MainActivity : AppCompatActivity() {
             acceptURL = "", // Has to be identical to the one defined in the checkout session
             cancelURL = "",
             sheetStyle = SheetStyle.FULL_SCREEN,
-            dismissible = true
+            dismissible = true,
+            hideHeader = true
         )
 
         // Open checkout sheet
