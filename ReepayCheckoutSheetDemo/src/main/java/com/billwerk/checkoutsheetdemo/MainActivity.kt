@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.billwerk.checkout.CheckoutEvent
+import com.billwerk.checkout.CheckoutEventPublisher
 import com.billwerk.checkout.CheckoutSheet
 import com.billwerk.checkout.CheckoutSheetConfig
 import com.billwerk.checkout.SheetStyle
@@ -47,8 +47,8 @@ class MainActivity : AppCompatActivity() {
     private fun listenForEvents() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                CheckoutEvent.events.collect { eventType ->
-                    Log.d("MyApp", "Collected event ${eventType}")
+                CheckoutEventPublisher.events.collect { message ->
+                    Log.d("MyApp", "Collected event ${message.event}")
                 }
             }
         }
