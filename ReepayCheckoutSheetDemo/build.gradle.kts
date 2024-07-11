@@ -44,7 +44,7 @@ dependencies {
 
 
     // Option 2. Implement local depenency
-//     implementation(project(":checkout"))
+    // implementation(project(":checkout"))
 
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
