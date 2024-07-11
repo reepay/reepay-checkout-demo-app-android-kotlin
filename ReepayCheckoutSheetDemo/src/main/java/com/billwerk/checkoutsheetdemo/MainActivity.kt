@@ -56,6 +56,14 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                CheckoutEventPublisher.userEvents.collect { message ->
+                    Log.d("MyApp", "Colleted user event: ${message.event}")
+                }
+            }
+        }
     }
 
     private fun handleEvents(message: SDKEventMessage){
