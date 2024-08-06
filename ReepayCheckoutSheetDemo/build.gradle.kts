@@ -40,10 +40,10 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.7.0")
 
     // Option 1. implement external dependency
-    implementation("com.github.reepay:reepay-android-checkout-sheet:1.0.9")
+    implementation("com.github.reepay:reepay-android-checkout-sheet:1.0.12")
 
 
-    // Option 2. Implement local depenency
+    // Option 2. Implement local dependency
     // implementation(project(":checkout"))
 
     implementation("com.google.android.material:material:1.12.0")

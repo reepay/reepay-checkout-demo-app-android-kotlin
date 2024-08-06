@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Reepay Checkout SDK Demo App</string>
+    <string name="close_button_text">Close</string>
 </resources>

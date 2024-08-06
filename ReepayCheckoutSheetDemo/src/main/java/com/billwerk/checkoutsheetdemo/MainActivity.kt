@@ -31,11 +31,11 @@ class MainActivity : AppCompatActivity() {
         // Example configuration
         val config = CheckoutSheetConfig(
             sessionId = "",
-            acceptURL = "", // Has to be identical to the one defined in the checkout session
-            cancelURL = "",
             sheetStyle = SheetStyle.FULL_SCREEN,
             dismissible = true,
-            hideHeader = true
+            hideHeader = true,
+            closeButtonIcon = R.drawable.button_close_icon,
+            closeButtonText = R.string.close_button_text
         )
 
         // Open checkout sheet
@@ -66,22 +66,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleEvents(message: SDKEventMessage){
+    private fun handleEvents(message: SDKEventMessage) {
         val eventType: SDKEventType = message.event
         Log.d("MyApp", "Collected event: $eventType")
 
-        when(eventType){
+        when (eventType) {
             SDKEventType.Accept -> {
                 Log.d("MyApp", "Invoice handle: ${message.data?.invoice}")
                 Log.d("MyApp", "Customer handle: ${message.data?.customer}")
                 Log.d("MyApp", "Payment method id: ${message.data?.payment_method}")
             }
+
             SDKEventType.Error -> {
                 Log.d("MyApp", "Error type: ${message.data?.error}")
             }
+
             SDKEventType.Cancel -> {
                 checkoutSheet.dismiss()
             }
+
             SDKEventType.Close -> {}
             SDKEventType.Open -> {}
             SDKEventType.Init -> {}
