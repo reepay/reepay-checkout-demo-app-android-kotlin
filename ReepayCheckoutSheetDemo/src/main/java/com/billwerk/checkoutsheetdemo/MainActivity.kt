@@ -46,6 +46,9 @@ class MainActivity : AppCompatActivity() {
         // Subscribe to events
         listenForEvents()
 
+        val intentHandler = IntentHandler(checkoutSheet)
+        intentHandler.handleIncomingAppRedirect(intent, config)
+
     }
 
     private fun listenForEvents() {

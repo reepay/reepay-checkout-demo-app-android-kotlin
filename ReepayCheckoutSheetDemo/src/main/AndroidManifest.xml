@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -19,8 +19,19 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <!-- Handle the VIEW action -->
+                <action android:name="android.intent.action.VIEW" />
+
+                <!-- Allow the activity to be launched from the browser or other apps -->
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Define the custom scheme -->
+                <data android:scheme="reepaydemoapp" />
+                <!--<data android:mimeType="text/plain" />-->
             </intent-filter>
         </activity>
     </application>
