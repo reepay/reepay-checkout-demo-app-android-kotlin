@@ -49,7 +49,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.7.0")
 
     // Option 1. implement external dependency
-    implementation("com.github.reepay:reepay-android-checkout-sheet:1.0.14")
+    implementation("com.github.reepay:reepay-android-checkout-sheet:1.0.15")
 
 
     // Option 2. Implement local dependency
@@ -57,7 +57,7 @@ dependencies {
 
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.4")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.5")
     implementation("com.google.code.gson:gson:2.11.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
