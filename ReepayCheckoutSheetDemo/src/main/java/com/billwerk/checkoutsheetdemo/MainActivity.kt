@@ -24,13 +24,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val payButton: Button = findViewById(R.id.pay_button)
+        val webviewButton: Button = findViewById(R.id.webview_button)
 
         // Initialize Checkout Sheet
         this.checkoutSheet = CheckoutSheet(this)
+        val sessionId = "" // Enter your checkout session id
 
         // Example configuration
         val config = CheckoutSheetConfig(
-            sessionId = "",
+            sessionId = sessionId,
             sheetStyle = SheetStyle.FULL_SCREEN,
             dismissible = true,
             hideHeader = true,
@@ -38,9 +40,15 @@ class MainActivity : AppCompatActivity() {
             closeButtonText = R.string.close_button_text
         )
 
-        // Open checkout sheet
+        // Open SDK checkout sheet
         payButton.setOnClickListener {
             this.checkoutSheet.open(config)
+        }
+
+        // Open your own checkout sheet
+        webviewButton.setOnClickListener {
+            val sessionUrl = "https://checkout.reepay.com/#/$sessionId"
+            MyWebView(this).showWebViewBottomSheet(sessionUrl)
         }
 
         // Subscribe to events
