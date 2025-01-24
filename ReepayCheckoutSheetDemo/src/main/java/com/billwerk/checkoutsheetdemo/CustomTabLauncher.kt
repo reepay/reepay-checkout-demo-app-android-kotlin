@@ -2,7 +2,6 @@ package com.billwerk.checkoutsheetdemo
 
 import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -15,19 +14,24 @@ import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.google.gson.reflect.TypeToken
 
+private val TAG = "ActLauncher" // Android Custom Tabs
+
 // Message Signature to "Initiate WebView mode on Checkout"
 data class InitMessage(val isWebView: Boolean, val userAgent: String?)
 
 class CustomTabLauncher(private val context: Context) {
+
+    companion object {
+        // Origin of the website launched
+        val SOURCE_ORIGIN: Uri = Uri.parse(MainActivity.CHECKOUT_DOMAIN)
+
+        // Origin where postMessage communications are sent
+        val TARGET_ORIGIN: Uri = Uri.parse(MainActivity.CHECKOUT_DOMAIN)
+    }
+
     private var customTabsClient: CustomTabsClient? = null
     private var customTabsSession: CustomTabsSession? = null
     private var onSessionReady: ((CustomTabsSession?) -> Unit)? = null
-
-    // Origin of the website launched
-    private val SOURCE_ORIGIN: Uri = Uri.parse(MainActivity.CHECKOUT_DOMAIN)
-
-    // Origin where postMessage communications are sent
-    private val TARGET_ORIGIN: Uri = Uri.parse(MainActivity.CHECKOUT_DOMAIN)
 
     private var relationshipValidated: Boolean = false
     private val gson = Gson()
@@ -37,7 +41,7 @@ class CustomTabLauncher(private val context: Context) {
 
         val packageName = CustomTabsClient.getPackageName(context, null)
         if (packageName == null) {
-            Log.e("CustomTabLauncher", "No Custom Tabs provider found on the device.")
+            Log.e(TAG, "No Custom Tabs provider found on the device.")
             callback(null)
             return
         }
@@ -54,13 +58,13 @@ class CustomTabLauncher(private val context: Context) {
                     customTabsClient?.warmup(0L)
                     customTabsSession = customTabsClient?.newSession(customTabsCallback)
                     onSessionReady?.invoke(customTabsSession)
-                    Log.d("CustomTabLauncher", "Custom Tabs Service connected.")
+                    Log.d(TAG, "Custom Tabs Service connected.")
                 }
 
                 override fun onServiceDisconnected(name: ComponentName) {
                     customTabsClient = null
                     customTabsSession = null
-                    Log.d("CustomTabLauncher", "Custom Tabs Service disconnected.")
+                    Log.d(TAG, "Custom Tabs Service disconnected.")
                 }
             })
     }
@@ -71,11 +75,10 @@ class CustomTabLauncher(private val context: Context) {
             relation: Int, requestedOrigin: Uri,
             result: Boolean, extras: Bundle?
         ) {
-            Log.d("CustomTabLauncher", "Requested Origin: $requestedOrigin")
-            Log.d("CustomTabLauncher", "Validation Result: $result")
+            Log.d(TAG, "[Requested Origin: $requestedOrigin] [Validation: $result]")
             if (extras != null) {
                 for (key in extras.keySet()) {
-                    Log.d("CustomTabLauncher", "Extra: " + key + " = " + extras[key])
+                    Log.d(TAG, "Extra: " + key + " = " + extras[key])
                 }
             }
             relationshipValidated = result
@@ -87,13 +90,13 @@ class CustomTabLauncher(private val context: Context) {
             if (navigationEvent == NAVIGATION_FINISHED) {
                 if (!relationshipValidated) {
                     Log.e(
-                        "CustomTabLauncher",
+                        TAG,
                         "Validation failed. Not starting PostMessage communication."
                     )
                 }
             } else if (navigationEvent == TAB_HIDDEN) {
                 Log.i(
-                    "CustomTabLauncher",
+                    TAG,
                     "User closed Custom Tab"
                 )
             }
@@ -104,63 +107,37 @@ class CustomTabLauncher(private val context: Context) {
                     TARGET_ORIGIN,
                     Bundle()
                 )
-            Log.d("CustomTabLauncher", "Requested PostMessage Channel: $result")
+            Log.d(TAG, "Requested PostMessage Channel: $result")
         }
 
         override fun onPostMessage(message: String, extras: Bundle?) {
             super.onPostMessage(message, extras)
-            Log.d("CustomTabLauncher", "onPostMessage: $message")
+            Log.d(TAG, "onPostMessage: $message")
 
             try {
                 val mapType = object : TypeToken<Map<String, Any>>() {}.type
                 val messageMap: Map<String, Any> = Gson().fromJson(message, mapType)
                 for ((key, value) in messageMap) {
                     if (key == "event") {
-                        handleEvents(value.toString())
+                        EventMessageHandler(context, TAG).handle(value.toString())
                     }
                 }
             } catch (e: JsonSyntaxException) {
-                Log.e("CustomTabLauncher", "onPostMessage string: $message")
+                Log.e(TAG, "onPostMessage string: $message")
             }
         }
 
         override fun onMessageChannelReady(extras: Bundle?) {
-            Log.d("CustomTabLauncher", "Message channel ready.")
+            Log.d(TAG, "Message channel ready.")
 
-            val message = InitMessage(true, "Custom Tabs / TWA")
+            val message = InitMessage(true, "Android (Custom Tabs)")
             val messageJson = gson.toJson(message)
             val result: Int = customTabsSession!!.postMessage(messageJson, null)
 
             if (result == CustomTabsService.RESULT_SUCCESS) {
-                Log.i("CustomTabLauncher", "postMessage: RESULT_SUCCESS")
-            } else Log.e("CustomTabLauncher", "postMessage: RESULT_FAILURE")
+                Log.i(TAG, "postMessage: RESULT_SUCCESS")
+            } else Log.e(TAG, "postMessage: RESULT_FAILURE")
         }
     }
 
-    private fun handleEvents(event: String) {
-        when (event) {
-            "Init" -> Log.i("CustomTabLauncher", "Checkout started")
-            "Open" -> Log.i("CustomTabLauncher", "Checkout opened")
-            "Close" -> Log.i("CustomTabLauncher", "Checkout closed")
-            "Accept" -> {
-                Log.i("CustomTabLauncher", "Checkout accept")
-                closeCustomTab()
-            }
-
-            "Cancel" -> {
-                Log.d("CustomTabLauncher", "Checkout cancel")
-                closeCustomTab()
-            }
-
-            "Error" -> Log.d("CustomTabLauncher", "Error occurred")
-            else -> Log.d("CustomTabLauncher", "Unhandled event: $event")
-        }
-    }
-
-    private fun closeCustomTab() {
-        // Launch a new intent to bring your app to the foreground
-        val intent = Intent(context, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-        context.startActivity(intent)
-    }
 }

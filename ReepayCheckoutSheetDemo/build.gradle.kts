@@ -60,6 +60,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
     implementation("com.google.code.gson:gson:2.11.0")
     implementation("androidx.browser:browser:1.8.0")
+    implementation("com.google.androidbrowserhelper:androidbrowserhelper:2.4.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")

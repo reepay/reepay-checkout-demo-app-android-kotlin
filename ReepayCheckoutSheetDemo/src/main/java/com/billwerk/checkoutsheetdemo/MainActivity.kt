@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.browser.customtabs.CustomTabsSession
 import androidx.lifecycle.Lifecycle
@@ -25,7 +26,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var checkoutSheet: CheckoutSheet
 
-    private lateinit var customTabHelper: CustomTabLauncher
+    private lateinit var customTabLauncher: CustomTabLauncher
+
+    private lateinit var trustedWebActivityLauncher: TrustedWebActivityLauncher
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,13 +61,18 @@ class MainActivity : AppCompatActivity() {
 
         // Open your own checkout sheet
         webviewButton.setOnClickListener {
-            MyWebView(this).showWebViewBottomSheet(sessionUrl)
+            //MyWebView(this).showWebViewBottomSheet(sessionUrl)
+
+            trustedWebActivityLauncher = TrustedWebActivityLauncher(this)
+            trustedWebActivityLauncher.launchTwa(sessionUrl) {
+                finish()
+            }
         }
 
         // Open checkout in Chrome Custom Tab
         customTabButton.setOnClickListener {
-            customTabHelper = CustomTabLauncher(this)
-            customTabHelper.bindCustomTabsService { session ->
+            customTabLauncher = CustomTabLauncher(this)
+            customTabLauncher.bindCustomTabsService { session ->
                 if (session != null) {
                     launchCustomTab(sessionUrl, session)
                 } else {
@@ -85,7 +93,12 @@ class MainActivity : AppCompatActivity() {
         val screenHeight = resources.displayMetrics.heightPixels
         val partialHeight = (screenHeight * 0.85).toInt()
 
+        val defaultColorSchemeParams = CustomTabColorSchemeParams.Builder()
+            .setToolbarColor(android.graphics.Color.WHITE)
+            .build()
+
         val customTabsIntent = CustomTabsIntent.Builder(session)
+            .setDefaultColorSchemeParams(defaultColorSchemeParams)
             .setInitialActivityHeightPx(partialHeight)
             .setShowTitle(false)
             .setUrlBarHidingEnabled(true)
