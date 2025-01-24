@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.browser.customtabs.CustomTabsSession
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -25,9 +26,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private lateinit var checkoutSheet: CheckoutSheet
-
     private lateinit var customTabLauncher: CustomTabLauncher
-
     private lateinit var trustedWebActivityLauncher: TrustedWebActivityLauncher
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         val payButton: Button = findViewById(R.id.pay_button)
         val webviewButton: Button = findViewById(R.id.webview_button)
         val customTabButton: Button = findViewById(R.id.custom_tab_button)
+        val twaButton: Button = findViewById(R.id.twa_button)
 
         val sessionId = "" // Enter your checkout session id
         val sessionUrl = CHECKOUT_DOMAIN + sessionId
@@ -61,12 +61,7 @@ class MainActivity : AppCompatActivity() {
 
         // Open your own checkout sheet
         webviewButton.setOnClickListener {
-            //MyWebView(this).showWebViewBottomSheet(sessionUrl)
-
-            trustedWebActivityLauncher = TrustedWebActivityLauncher(this)
-            trustedWebActivityLauncher.launchTwa(sessionUrl) {
-                finish()
-            }
+            MyWebView(this).showWebViewBottomSheet(sessionUrl)
         }
 
         // Open checkout in Chrome Custom Tab
@@ -78,6 +73,14 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     Log.e("MyApp", "Failed to bind to Custom Tabs Service.")
                 }
+            }
+        }
+
+        // Open checkout in Trusted Web Activity
+        twaButton.setOnClickListener {
+            trustedWebActivityLauncher = TrustedWebActivityLauncher(this)
+            trustedWebActivityLauncher.launchTwa(sessionUrl) {
+                finish()
             }
         }
 
