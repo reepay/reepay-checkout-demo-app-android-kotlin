@@ -18,6 +18,7 @@ class MyWebViewListener(private val context: Context, private val dialog: Bottom
         // Iterate through all keys and log their values
         for ((key, value) in messageMap) {
             if (key == "event") {
+            if(key == "event"){
                 handleEvents(value.toString())
             }
         }

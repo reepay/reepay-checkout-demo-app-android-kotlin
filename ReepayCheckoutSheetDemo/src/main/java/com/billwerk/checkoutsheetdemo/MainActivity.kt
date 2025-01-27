@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
 
         // Initialize Checkout Sheet
         this.checkoutSheet = CheckoutSheet(this)
+        val sessionId = "" // Enter your checkout session id
 
         // Example configuration
         val config = CheckoutSheetConfig(
@@ -81,6 +82,10 @@ class MainActivity : AppCompatActivity() {
             trustedWebActivityLauncher.launchTwa(sessionUrl) {
                 finish()
             }
+        }
+
+            val sessionUrl = "https://checkout.reepay.com/#/$sessionId"
+            MyWebView(this).showWebViewBottomSheet(sessionUrl)
         }
 
         // Subscribe to events
