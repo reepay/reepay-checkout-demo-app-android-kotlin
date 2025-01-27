@@ -38,11 +38,10 @@ class MainActivity : AppCompatActivity() {
         val twaButton: Button = findViewById(R.id.twa_button)
 
         val sessionId = "" // Enter your checkout session id
-        val sessionUrl = CHECKOUT_DOMAIN + sessionId
+        val sessionUrl: String = CHECKOUT_DOMAIN + sessionId
 
         // Initialize Checkout Sheet
         this.checkoutSheet = CheckoutSheet(this)
-        val sessionId = "" // Enter your checkout session id
 
         // Example configuration
         val config = CheckoutSheetConfig(
@@ -82,10 +81,6 @@ class MainActivity : AppCompatActivity() {
             trustedWebActivityLauncher.launchTwa(sessionUrl) {
                 finish()
             }
-        }
-
-            val sessionUrl = "https://checkout.reepay.com/#/$sessionId"
-            MyWebView(this).showWebViewBottomSheet(sessionUrl)
         }
 
         // Subscribe to events
