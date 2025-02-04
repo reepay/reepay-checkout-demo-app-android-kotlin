@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity() {
             sheetStyle = SheetStyle.FULL_SCREEN,
             dismissible = true,
             hideHeader = true,
+            hideFooterCancel = true,
             closeButtonIcon = R.drawable.button_close_icon,
             closeButtonText = R.string.close_button_text
         )
