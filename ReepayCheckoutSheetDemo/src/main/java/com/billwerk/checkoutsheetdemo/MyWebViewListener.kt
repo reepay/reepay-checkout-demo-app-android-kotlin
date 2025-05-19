@@ -17,7 +17,7 @@ class MyWebViewListener(private val context: Context, private val dialog: Bottom
 
         // Iterate through all keys and log their values
         for ((key, value) in messageMap) {
-            if(key == "event"){
+            if (key == "event") {
                 handleEvents(value.toString())
             }
         }
@@ -31,11 +31,11 @@ class MyWebViewListener(private val context: Context, private val dialog: Bottom
     private fun handleEvents(event: String) {
         when (event) {
             "Init" -> Log.d("AndroidWebViewListener", "Checkout started")
-            "Open" ->  Log.d("AndroidWebViewListener", "Checkout opened")
-            "Close" ->  Log.d("AndroidWebViewListener", "Checkout closed")
+            "Open" -> Log.d("AndroidWebViewListener", "Checkout opened")
+            "Close" -> Log.d("AndroidWebViewListener", "Checkout closed")
             "Accept" -> dialog.dismiss()
             "Cancel" -> dialog.dismiss()
-            "Error" ->  Log.d("AndroidWebViewListener", "Error occurred")
+            "Error" -> Log.d("AndroidWebViewListener", "Error occurred")
             else -> Log.d("AndroidWebViewListener", "Unhandled event: $event")
         }
     }
