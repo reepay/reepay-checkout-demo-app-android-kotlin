@@ -49,7 +49,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.7.1")
 
     // Option 1. implement external dependency
-    implementation("com.github.reepay:reepay-android-checkout-sheet:1.0.16")
+    implementation("com.github.reepay:reepay-android-checkout-sheet:1.0.18")
 
 
     // Option 2. Implement local dependency
