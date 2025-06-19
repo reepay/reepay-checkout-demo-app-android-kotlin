@@ -20,6 +20,8 @@ import com.billwerk.checkout.sheet.SDKEventType
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
+    private val TAG = "MyApp" // MyApp that uses Android Checkout SDK
+
     companion object {
         const val CHECKOUT_DOMAIN: String = "https://checkout.reepay.com/#/"
     }
@@ -49,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             sheetStyle = SheetStyle.FULL_SCREEN,
             dismissible = true,
             hideHeader = true,
-            hideFooterCancel = true,
+            hideFooterCancel = false,
             closeButtonIcon = R.drawable.button_close_icon,
             closeButtonText = R.string.close_button_text
         )
@@ -71,7 +73,7 @@ class MainActivity : AppCompatActivity() {
                 if (session != null) {
                     launchCustomTab(sessionUrl, session)
                 } else {
-                    Log.e("MyApp", "Failed to bind to Custom Tabs Service.")
+                    Log.e(TAG, "Failed to bind to Custom Tabs Service.")
                 }
             }
         }
@@ -122,7 +124,7 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 CheckoutEventPublisher.userEvents.collect { message ->
-                    Log.d("MyApp", "Collected user event: ${message.event}")
+                    Log.d(TAG, "Collected user event: ${message.event}")
                 }
             }
         }
@@ -130,17 +132,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleEvents(message: SDKEventMessage) {
         val eventType: SDKEventType = message.event
-        Log.d("MyApp", "Collected event: $eventType")
+        Log.d(TAG, "Collected event: $eventType")
 
         when (eventType) {
             SDKEventType.Accept -> {
-                Log.d("MyApp", "Invoice handle: ${message.data?.invoice}")
-                Log.d("MyApp", "Customer handle: ${message.data?.customer}")
-                Log.d("MyApp", "Payment method id: ${message.data?.payment_method}")
+                Log.d(TAG, "Invoice handle: ${message.data?.invoice}")
+                Log.d(TAG, "Customer handle: ${message.data?.customer}")
+                Log.d(TAG, "Payment method id: ${message.data?.payment_method}")
             }
 
             SDKEventType.Error -> {
-                Log.d("MyApp", "Error type: ${message.data?.error}")
+                Log.d(TAG, "Error type: ${message.data?.error}")
             }
 
             SDKEventType.Cancel -> {
@@ -151,7 +153,7 @@ class MainActivity : AppCompatActivity() {
             SDKEventType.Open -> {}
             SDKEventType.Init -> {}
             else -> {
-                Log.d("MyApp", "Unknown event: $eventType")
+                Log.d(TAG, "Unknown event: $eventType")
             }
         }
     }
