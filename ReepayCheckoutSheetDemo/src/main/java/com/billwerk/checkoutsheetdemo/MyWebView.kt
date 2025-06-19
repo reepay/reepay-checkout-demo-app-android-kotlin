@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.ImageButton
-import android.widget.TextView
+import android.widget.LinearLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
@@ -27,12 +26,16 @@ class MyWebView(private val context: Context) {
         webView.isVerticalScrollBarEnabled = true
         webView.scrollBarStyle = WebView.SCROLLBARS_INSIDE_OVERLAY
 
-        webView.addJavascriptInterface(MyWebViewListener(context, bottomSheetDialog), "AndroidWebViewListener")
+        webView.addJavascriptInterface(
+            MyWebViewListener(context, bottomSheetDialog),
+            "AndroidWebViewListener"
+        )
 
         webView.loadUrl(sessionUrl)
 
         bottomSheetDialog.setOnShowListener { dialog ->
-            val bottomSheet = (dialog as BottomSheetDialog).findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+            val bottomSheet =
+                (dialog as BottomSheetDialog).findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
             bottomSheet?.let {
                 val behavior = BottomSheetBehavior.from(it)
                 behavior.state = BottomSheetBehavior.STATE_EXPANDED
@@ -44,12 +47,8 @@ class MyWebView(private val context: Context) {
         bottomSheetDialog.setCancelable(false)
         bottomSheetDialog.show()
 
-        val closeButton = bottomSheetView.findViewById<ImageButton>(R.id.closeButton)
-        val closeText = bottomSheetView.findViewById<TextView>(R.id.closeText)
+        val closeButton = bottomSheetView.findViewById<LinearLayout>(R.id.closeButton)
         closeButton.setOnClickListener {
-            bottomSheetDialog.dismiss()
-        }
-        closeText.setOnClickListener {
             bottomSheetDialog.dismiss()
         }
     }
