@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var checkoutSheet: CheckoutSheet
     private lateinit var customTabLauncher: CustomTabLauncher
-    private lateinit var trustedWebActivityLauncher: TrustedWebActivityLauncher
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +36,6 @@ class MainActivity : AppCompatActivity() {
         val payButton: Button = findViewById(R.id.pay_button)
         val webviewButton: Button = findViewById(R.id.webview_button)
         val customTabButton: Button = findViewById(R.id.custom_tab_button)
-        val twaButton: Button = findViewById(R.id.twa_button)
 
         val sessionId = "" // Enter your checkout session id
         val sessionUrl: String = CHECKOUT_DOMAIN + sessionId
@@ -75,14 +73,6 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     Log.e(TAG, "Failed to bind to Custom Tabs Service.")
                 }
-            }
-        }
-
-        // Open checkout in Trusted Web Activity
-        twaButton.setOnClickListener {
-            trustedWebActivityLauncher = TrustedWebActivityLauncher(this)
-            trustedWebActivityLauncher.launchTwa(sessionUrl) {
-                finish()
             }
         }
 

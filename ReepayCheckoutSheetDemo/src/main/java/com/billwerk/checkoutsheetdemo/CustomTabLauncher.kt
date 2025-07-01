@@ -1,3 +1,8 @@
+/**
+ * Custom Tabs requires your app to be verified via Digital Asset Links:
+ * https://developer.android.com/training/app-links/verify-android-applinks#web-assoc
+ */
+
 package com.billwerk.checkoutsheetdemo
 
 import android.content.ComponentName

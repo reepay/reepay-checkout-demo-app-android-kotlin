@@ -3,7 +3,6 @@ package com.billwerk.checkoutsheetdemo
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import com.billwerk.checkoutsheetdemo.TrustedWebActivityLauncher.Companion.isTwaRefreshed
 
 class EventMessageHandler(private val context: Context, private val tag: String) {
 
@@ -15,7 +14,6 @@ class EventMessageHandler(private val context: Context, private val tag: String)
             "Open" -> Log.i(tag, "Checkout opened")
             "Close" -> {
                 Log.i(tag, "Checkout closed")
-                isTwaRefreshed = true
             }
 
             "Accept" -> {

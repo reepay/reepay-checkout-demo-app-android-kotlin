@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -39,8 +41,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_1_8)
+        }
     }
 }
 
@@ -49,7 +53,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.7.1")
 
     // Option 1. implement external dependency
-    implementation("com.github.reepay:reepay-android-checkout-sheet:1.0.18")
+    implementation("com.github.reepay:reepay-android-checkout-sheet:1.0.20")
 
     // Option 2. Implement local dependency
     // implementation(project(":checkout"))
@@ -60,6 +64,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.13.1")
     implementation("androidx.browser:browser:1.8.0")
     implementation("com.google.androidbrowserhelper:androidbrowserhelper:2.4.0")
+    implementation("androidx.webkit:webkit:1.14.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
