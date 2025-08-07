@@ -11,10 +11,10 @@ import androidx.browser.customtabs.CustomTabsSession
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.billwerk.checkout.CheckoutEventPublisher
-import com.billwerk.checkout.CheckoutSheet
-import com.billwerk.checkout.CheckoutSheetConfig
-import com.billwerk.checkout.SheetStyle
+import com.billwerk.checkout.sheet.CheckoutEventPublisher
+import com.billwerk.checkout.sheet.CheckoutSheet
+import com.billwerk.checkout.sheet.CheckoutSheetConfig
+import com.billwerk.checkout.sheet.SheetStyle
 import com.billwerk.checkout.sheet.SDKEventMessage
 import com.billwerk.checkout.sheet.SDKEventType
 import kotlinx.coroutines.launch
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         val customTabButton: Button = findViewById(R.id.custom_tab_button)
 
         val sessionId = "" // Enter your checkout session id
-        val sessionUrl: String = CHECKOUT_DOMAIN + sessionId
+        val sessionUrl: String = CHECKOUT_DOMAIN + sessionId + "?hideFooterCancel=false"
 
         // Initialize Checkout Sheet
         this.checkoutSheet = CheckoutSheet(this)
