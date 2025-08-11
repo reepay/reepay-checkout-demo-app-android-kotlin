@@ -35,9 +35,7 @@ class MyWebView(private val context: Context) {
 
         // Enable Google Pay on Android WebView
         // https://developers.googleblog.com/en/adding-support-for-google-pay-within-android-webview/
-        if (WebViewFeature.isFeatureSupported(
-                WebViewFeature.PAYMENT_REQUEST)
-            ) {
+        if (WebViewFeature.isFeatureSupported(WebViewFeature.PAYMENT_REQUEST)) {
             WebSettingsCompat.setPaymentRequestEnabled(webView.settings, true);
         }
 
