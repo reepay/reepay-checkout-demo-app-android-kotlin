@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         val customTabButton: Button = findViewById(R.id.custom_tab_button)
 
         val sessionId = "" // Enter your checkout session id
-        val sessionUrl: String = CHECKOUT_DOMAIN + sessionId + "?hideFooterCancel=false"
+        val sessionUrl = "$CHECKOUT_DOMAIN$sessionId?hideFooterCancel=false"
 
         // Initialize Checkout Sheet
         this.checkoutSheet = CheckoutSheet(this)
