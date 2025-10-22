@@ -18,6 +18,7 @@ import androidx.browser.customtabs.CustomTabsSession
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.google.gson.reflect.TypeToken
+import androidx.core.net.toUri
 
 private val TAG = "ActLauncher" // Android Custom Tabs
 
@@ -28,10 +29,10 @@ class CustomTabLauncher(private val context: Context) {
 
     companion object {
         // Origin of the website launched
-        val SOURCE_ORIGIN: Uri = Uri.parse(MainActivity.CHECKOUT_DOMAIN)
+        val SOURCE_ORIGIN: Uri = MainActivity.CHECKOUT_DOMAIN.toUri()
 
         // Origin where postMessage communications are sent
-        val TARGET_ORIGIN: Uri = Uri.parse(MainActivity.CHECKOUT_DOMAIN)
+        val TARGET_ORIGIN: Uri = MainActivity.CHECKOUT_DOMAIN.toUri()
     }
 
     private var customTabsClient: CustomTabsClient? = null

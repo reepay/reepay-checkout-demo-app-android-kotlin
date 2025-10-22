@@ -1,6 +1,6 @@
 package com.billwerk.checkoutsheetdemo
 
-import android.net.Uri
+import androidx.core.net.toUri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity() {
             .setUrlBarHidingEnabled(true)
             .build()
 
-        customTabsIntent.launchUrl(this, Uri.parse(url))
+        customTabsIntent.launchUrl(this, url.toUri())
     }
 
     private fun listenForEvents() {
