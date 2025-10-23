@@ -1,23 +1,33 @@
 package com.billwerk.checkoutsheetdemo
 
+import androidx.core.net.toUri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.browser.customtabs.CustomTabColorSchemeParams
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.browser.customtabs.CustomTabsSession
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.billwerk.checkout.CheckoutEventPublisher
-import com.billwerk.checkout.CheckoutSheet
-import com.billwerk.checkout.CheckoutSheetConfig
-import com.billwerk.checkout.SheetStyle
+import com.billwerk.checkout.sheet.CheckoutEventPublisher
+import com.billwerk.checkout.sheet.CheckoutSheet
+import com.billwerk.checkout.sheet.CheckoutSheetConfig
+import com.billwerk.checkout.sheet.SheetStyle
 import com.billwerk.checkout.sheet.SDKEventMessage
 import com.billwerk.checkout.sheet.SDKEventType
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
+    private val TAG = "MyApp" // MyApp that uses Android Checkout SDK
+
+    companion object {
+        const val CHECKOUT_DOMAIN: String = "https://checkout.reepay.com/#/"
+    }
 
     private lateinit var checkoutSheet: CheckoutSheet
+    private lateinit var customTabLauncher: CustomTabLauncher
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,10 +35,13 @@ class MainActivity : AppCompatActivity() {
 
         val payButton: Button = findViewById(R.id.pay_button)
         val webviewButton: Button = findViewById(R.id.webview_button)
+        val customTabButton: Button = findViewById(R.id.custom_tab_button)
+
+        val sessionId = "" // Enter your checkout session id
+        val sessionUrl = "$CHECKOUT_DOMAIN$sessionId?hideFooterCancel=false"
 
         // Initialize Checkout Sheet
         this.checkoutSheet = CheckoutSheet(this)
-        val sessionId = "" // Enter your checkout session id
 
         // Example configuration
         val config = CheckoutSheetConfig(
@@ -36,6 +49,7 @@ class MainActivity : AppCompatActivity() {
             sheetStyle = SheetStyle.FULL_SCREEN,
             dismissible = true,
             hideHeader = true,
+            hideFooterCancel = false,
             closeButtonIcon = R.drawable.button_close_icon,
             closeButtonText = R.string.close_button_text
         )
@@ -47,8 +61,19 @@ class MainActivity : AppCompatActivity() {
 
         // Open your own checkout sheet
         webviewButton.setOnClickListener {
-            val sessionUrl = "https://checkout.reepay.com/#/$sessionId"
             MyWebView(this).showWebViewBottomSheet(sessionUrl)
+        }
+
+        // Open checkout in Chrome Custom Tab
+        customTabButton.setOnClickListener {
+            customTabLauncher = CustomTabLauncher(this)
+            customTabLauncher.bindCustomTabsService { session ->
+                if (session != null) {
+                    launchCustomTab(sessionUrl, session)
+                } else {
+                    Log.e(TAG, "Failed to bind to Custom Tabs Service.")
+                }
+            }
         }
 
         // Subscribe to events
@@ -57,6 +82,24 @@ class MainActivity : AppCompatActivity() {
         val intentHandler = IntentHandler(checkoutSheet)
         intentHandler.handleIncomingAppRedirect(intent, config)
 
+    }
+
+    private fun launchCustomTab(url: String, session: CustomTabsSession) {
+        val screenHeight = resources.displayMetrics.heightPixels
+        val partialHeight = (screenHeight * 0.85).toInt()
+
+        val defaultColorSchemeParams = CustomTabColorSchemeParams.Builder()
+            .setToolbarColor(android.graphics.Color.WHITE)
+            .build()
+
+        val customTabsIntent = CustomTabsIntent.Builder(session)
+            .setDefaultColorSchemeParams(defaultColorSchemeParams)
+            .setInitialActivityHeightPx(partialHeight)
+            .setShowTitle(false)
+            .setUrlBarHidingEnabled(true)
+            .build()
+
+        customTabsIntent.launchUrl(this, url.toUri())
     }
 
     private fun listenForEvents() {
@@ -71,7 +114,7 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 CheckoutEventPublisher.userEvents.collect { message ->
-                    Log.d("MyApp", "Colleted user event: ${message.event}")
+                    Log.d(TAG, "Collected user event: ${message.event}")
                 }
             }
         }
@@ -79,17 +122,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleEvents(message: SDKEventMessage) {
         val eventType: SDKEventType = message.event
-        Log.d("MyApp", "Collected event: $eventType")
+        Log.d(TAG, "Collected event: $eventType")
 
         when (eventType) {
             SDKEventType.Accept -> {
-                Log.d("MyApp", "Invoice handle: ${message.data?.invoice}")
-                Log.d("MyApp", "Customer handle: ${message.data?.customer}")
-                Log.d("MyApp", "Payment method id: ${message.data?.payment_method}")
+                Log.d(TAG, "Invoice handle: ${message.data?.invoice}")
+                Log.d(TAG, "Customer handle: ${message.data?.customer}")
+                Log.d(TAG, "Payment method id: ${message.data?.payment_method}")
             }
 
             SDKEventType.Error -> {
-                Log.d("MyApp", "Error type: ${message.data?.error}")
+                Log.d(TAG, "Error type: ${message.data?.error}")
             }
 
             SDKEventType.Cancel -> {
@@ -100,7 +143,7 @@ class MainActivity : AppCompatActivity() {
             SDKEventType.Open -> {}
             SDKEventType.Init -> {}
             else -> {
-                Log.d("MyApp", "Unknown event: $eventType")
+                Log.d(TAG, "Unknown event: $eventType")
             }
         }
     }

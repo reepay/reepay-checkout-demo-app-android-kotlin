@@ -8,6 +8,8 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.LinearLayout
+import androidx.webkit.WebSettingsCompat
+import androidx.webkit.WebViewFeature
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
@@ -30,6 +32,12 @@ class MyWebView(private val context: Context) {
             MyWebViewListener(context, bottomSheetDialog),
             "AndroidWebViewListener"
         )
+
+        // Enable Google Pay on Android WebView
+        // https://developers.googleblog.com/en/adding-support-for-google-pay-within-android-webview/
+        if (WebViewFeature.isFeatureSupported(WebViewFeature.PAYMENT_REQUEST)) {
+            WebSettingsCompat.setPaymentRequestEnabled(webView.settings, true);
+        }
 
         webView.loadUrl(sessionUrl)
 
