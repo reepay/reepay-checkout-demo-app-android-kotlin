@@ -54,7 +54,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.13.2")
     implementation("com.google.android.material:material:1.13.0")
     implementation("androidx.constraintlayout:constraintlayout:2.2.1")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.4")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.10.0")
     implementation("androidx.browser:browser:1.9.0")
     implementation("com.google.androidbrowserhelper:androidbrowserhelper:2.6.2")
 
