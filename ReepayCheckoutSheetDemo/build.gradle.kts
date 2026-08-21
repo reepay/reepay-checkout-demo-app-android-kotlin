@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.billwerk.checkoutsheetdemo"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.billwerk.checkoutsheetdemo"
@@ -48,6 +48,7 @@ android {
 }
 
 dependencies {
+    implementation("androidx.webkit:webkit:1.14.0")
     implementation("androidx.core:core-ktx:1.19.0")
     implementation("androidx.appcompat:appcompat:1.7.1")
     implementation("com.google.code.gson:gson:2.14.0")
@@ -58,7 +59,7 @@ dependencies {
     implementation("com.google.androidbrowserhelper:androidbrowserhelper:2.7.2")
 
     // Option 1. implement external dependency
-    implementation("com.github.reepay:reepay-android-checkout-sheet:1.0.25")
+    implementation("com.github.reepay:reepay-android-checkout-sheet:1.0.26")
 
     // Option 2. Implement local dependency
     // implementation(project(":checkout"))

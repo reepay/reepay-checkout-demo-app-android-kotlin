@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     private val TAG = "MyApp" // MyApp that uses Android Checkout SDK
 
     companion object {
-        const val CHECKOUT_DOMAIN: String = "https://checkout.reepay.com/#/"
+        const val CHECKOUT_DOMAIN: String = "https://checkout.frisbii.com/#/"
     }
 
     private lateinit var checkoutSheet: CheckoutSheet
@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
 
         val sessionId = "" // Enter your checkout session id
         val sessionUrl = "$CHECKOUT_DOMAIN$sessionId?hideFooterCancel=false"
+        Log.d(TAG, "Session URL: $sessionUrl")
 
         // Initialize Checkout Sheet
         this.checkoutSheet = CheckoutSheet(this)

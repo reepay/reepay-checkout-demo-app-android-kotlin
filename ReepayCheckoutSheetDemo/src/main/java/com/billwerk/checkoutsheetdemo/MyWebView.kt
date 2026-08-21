@@ -2,6 +2,7 @@ package com.billwerk.checkoutsheetdemo
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebChromeClient
@@ -21,7 +22,17 @@ class MyWebView(private val context: Context) {
         val bottomSheetView = View.inflate(context, R.layout.bottom_sheet_dialog, null)
 
         val webView = bottomSheetView.findViewById<WebView>(R.id.webview)
-        webView.settings.javaScriptEnabled = true
+        webView.settings.apply {
+            javaScriptEnabled = true
+            userAgentString = "$userAgentString GOOGLE_PAY_SUPPORTED"
+
+            // Enable Google Pay on Android WebView
+            // https://developers.googleblog.com/en/adding-support-for-google-pay-within-android-webview/
+            if (WebViewFeature.isFeatureSupported(WebViewFeature.PAYMENT_REQUEST)) {
+                WebSettingsCompat.setPaymentRequestEnabled(this, true)
+            }
+        }
+
         webView.webChromeClient = WebChromeClient()
         webView.webViewClient = WebViewClient()
 
@@ -32,12 +43,6 @@ class MyWebView(private val context: Context) {
             MyWebViewListener(context, bottomSheetDialog),
             "AndroidWebViewListener"
         )
-
-        // Enable Google Pay on Android WebView
-        // https://developers.googleblog.com/en/adding-support-for-google-pay-within-android-webview/
-        if (WebViewFeature.isFeatureSupported(WebViewFeature.PAYMENT_REQUEST)) {
-            WebSettingsCompat.setPaymentRequestEnabled(webView.settings, true);
-        }
 
         webView.loadUrl(sessionUrl)
 
