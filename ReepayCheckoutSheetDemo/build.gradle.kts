@@ -59,7 +59,7 @@ dependencies {
     implementation("com.google.androidbrowserhelper:androidbrowserhelper:2.7.2")
 
     // Option 1. implement external dependency
-    implementation("com.github.reepay:reepay-android-checkout-sheet:1.0.25")
+    implementation("com.github.reepay:reepay-android-checkout-sheet:1.0.26")
 
     // Option 2. Implement local dependency
     // implementation(project(":checkout"))
