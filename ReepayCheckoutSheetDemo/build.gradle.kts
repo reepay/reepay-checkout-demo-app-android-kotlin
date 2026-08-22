@@ -56,7 +56,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.2.2")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.11.0")
     implementation("androidx.browser:browser:1.10.0")
-    implementation("com.google.androidbrowserhelper:androidbrowserhelper:2.7.2")
+    implementation("com.google.androidbrowserhelper:androidbrowserhelper:2.7.3")
 
     // Option 1. implement external dependency
     implementation("com.github.reepay:reepay-android-checkout-sheet:1.0.26")
