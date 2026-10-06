@@ -49,7 +49,7 @@ android {
 
 dependencies {
     implementation("androidx.webkit:webkit:1.17.0")
-    implementation("androidx.core:core-ktx:1.19.0")
+    implementation("androidx.core:core-ktx:1.19.1")
     implementation("androidx.appcompat:appcompat:1.8.0")
     implementation("com.google.code.gson:gson:2.14.0")
     implementation("com.google.android.material:material:1.14.0")
