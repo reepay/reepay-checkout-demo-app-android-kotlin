@@ -38,7 +38,7 @@ Read the toolchain from the Gradle files and keep it as declared there. Do not b
 - Gradle wrapper: `gradle/wrapper/gradle-wrapper.properties`
 - Kotlin style: `kotlin.code.style` in `gradle.properties`
 
-Debug and release both minify with R8. Update `ReepayCheckoutSheetDemo/proguard-rules.pro` when you add reflection or a JavaScript interface.
+Debug and release both minify with R8. Update `ReepayCheckoutSheetDemo/proguard-rules.pro` when you add a class that Gson serializes, or other reflection. Methods annotated with `@JavascriptInterface` are kept by the default rules.
 
 ```bash
 ./gradlew :ReepayCheckoutSheetDemo:assembleDebug
