@@ -1,4 +1,4 @@
-rootProject.name = "Reepay Checkout Kotlin Demo App"
+rootProject.name = "Reepay Checkout Demo"
 include(":ReepayCheckoutSheetDemo")
 
 pluginManagement {
