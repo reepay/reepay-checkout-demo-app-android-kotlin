@@ -31,7 +31,12 @@ To build against a local checkout of `reepay-android-checkout-sheet`, use the co
 
 ## Build
 
-AGP 9.5.2, Kotlin 2.4.21, Gradle 9.9.1. minSdk 26, compileSdk 37, targetSdk 36, JVM target 11. `kotlin.code.style=official`.
+Read the toolchain from the Gradle files and keep it as declared there. Do not bump AGP, Kotlin, Gradle, SDK levels, or the JVM target unless the task is that upgrade.
+
+- Plugin versions: root `build.gradle.kts`
+- `minSdk`, `compileSdk`, `targetSdk`, and the JVM target: `ReepayCheckoutSheetDemo/build.gradle.kts`
+- Gradle wrapper: `gradle/wrapper/gradle-wrapper.properties`
+- Kotlin style: `kotlin.code.style` in `gradle.properties`
 
 Debug and release both minify with R8. Update `ReepayCheckoutSheetDemo/proguard-rules.pro` when you add reflection or a JavaScript interface.
 
