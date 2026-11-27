@@ -27,7 +27,7 @@ The only module is `ReepayCheckoutSheetDemo`. UI is Views and XML under `res/lay
 
 Committed default is JitPack: `settings.gradle.kts` includes `https://jitpack.io`, and the app depends on `com.github.reepay:reepay-android-checkout-sheet`.
 
-To build against a local checkout of `reepay-android-checkout-sheet`, use the commented Option 2 in `settings.gradle.kts` and `ReepayCheckoutSheetDemo/build.gradle.kts`. Leave Option 1 as the committed default.
+To build against a local SDK checkout, enable Option 2 in `settings.gradle.kts` and set `projectDir` to the local `checkout` module. In `ReepayCheckoutSheetDemo/build.gradle.kts`, replace the JitPack dependency with `implementation(project(":checkout"))`. Keep JitPack as the committed default.
 
 ## Build
 
