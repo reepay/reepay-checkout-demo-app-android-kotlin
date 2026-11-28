@@ -10,6 +10,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import androidx.annotation.Keep
 import androidx.browser.customtabs.CustomTabsCallback
 import androidx.browser.customtabs.CustomTabsClient
 import androidx.browser.customtabs.CustomTabsService
@@ -23,6 +24,7 @@ import androidx.core.net.toUri
 private val TAG = "ActLauncher" // Android Custom Tabs
 
 // Message Signature to "Initiate WebView mode on Checkout"
+@Keep
 data class InitMessage(val isWebView: Boolean, val userAgent: String?)
 
 class CustomTabLauncher(private val context: Context) {
