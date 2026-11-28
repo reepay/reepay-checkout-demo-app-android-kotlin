@@ -1,4 +1,4 @@
-rootProject.name = "Reepay Checkout Kotlin Demo App"
+rootProject.name = "Reepay Checkout Demo"
 include(":ReepayCheckoutSheetDemo")
 
 pluginManagement {
@@ -9,7 +9,7 @@ pluginManagement {
     }
 }
 
-// Option 1. Load Checkout SDK dependency from Jitpack
+// Option 1. Load Reepay Checkout Sheet SDK dependency from Jitpack
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
